@@ -10,12 +10,13 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { baseUrl } from "../api";
 
 
 export default function ExpenseTable({ allExpenses, fetchAllExpenses }) {
     const handleDelte = async (expenseId) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/api/expense/delete/${expenseId}`);
+            const res = await axios.delete(`${baseUrl}/api/expense/delete/${expenseId}`);
             //console.log(res.data);
             if (res.data.success) {
                 fetchAllExpenses();
@@ -56,7 +57,7 @@ export default function ExpenseTable({ allExpenses, fetchAllExpenses }) {
                                 <TableCell>{row.title}</TableCell>
                                 <TableCell>{row.category}</TableCell>
                                 <TableCell>{row.amount}</TableCell>
-                                <TableCell>{moment(row.createdAt).format("DD MMM YYYY")}</TableCell>
+                                <TableCell>{moment(row.createdAt).format("DD MMM YYYY hh:mm")}</TableCell>
                                 <TableCell>
                                     <Button component={Link} to={`edit/${row._id}`} sx={{ m1: 1 }} variant='contained' color='success'>Edit</Button>
                                     <Button onClick={() => handleDelte(row?._id)} sx={{ m1: 1 }} variant='contained' color='error'>Delete</Button>

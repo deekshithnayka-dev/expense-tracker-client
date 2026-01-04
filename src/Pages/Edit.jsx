@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { baseUrl } from "../api";
 
 export default function Edit() {
     const { id } = useParams();
@@ -26,7 +27,7 @@ export default function Edit() {
     const [isloading, setIsLoading] = useState(false);
     const fetchSingleExpense = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/expense/view/${id}`);
+            const res = await axios.get(`${baseUrl}/api/expense/view/${id}`);
             //console.log(res.data);
             if (res.data.success) {
                 setFormData(res.data.expenseDetails);
@@ -45,7 +46,7 @@ export default function Edit() {
         //  console.log(formData);
         setIsLoading(true);
         try {
-            const res = await axios.put(`http://localhost:5000/api/expense/edit/${id}`, formData);
+            const res = await axios.put(`${baseUrl}/api/expense/edit/${id}`, formData);
             // console.log(res.data);
             if (res.data.success) {
                 toast.success(res.data.message);
